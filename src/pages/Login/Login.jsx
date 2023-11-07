@@ -4,9 +4,13 @@ import {FcGoogle} from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
 import {AiFillEye ,AiFillEyeInvisible} from 'react-icons/ai'
 import { getAuth, signInWithEmailAndPassword ,GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
-import { ToastContainer} from 'react-toastify'
+import { ToastContainer, toast} from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { userLoginInfo } from '../../slices/userSlice'
+
 
 const Login = () => {
+    const dispatch = useDispatch()
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     const navigate = useNavigate()
@@ -18,6 +22,7 @@ const Login = () => {
     const [passwordErr, setPasswordErr] = useState('')
     const[error, setError] = useState('')
     const[forgotPasswordModal,setForgotPasswordModal] = useState(false)
+    const [forgotPasswordError , setForgotPasswordError] =useState('')
 
     const handleEmail = (e)=>{
         setEmail(e.target.value);
@@ -48,11 +53,13 @@ const Login = () => {
         }
         if(email && password && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)&& /(?=.*\d)/.test(password) && /(?=.*[a-z])/.test(password)){
             signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                toast('login successfully done');
+            .then((user) => {
+                toast.success('login successfully done');
+                dispatch(userLoginInfo(user.user))
+                localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user.user)))
                 setTimeout(()=>{
                     navigate('/home')
-                },3000)
+                })
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -89,6 +96,9 @@ const Login = () => {
         .catch((error) => {
             const errorCode = error.code;
             console.log(errorCode);
+            if(errorCode.includes('auth/missing-email')){
+                setForgotPasswordError('please give your right email');
+            }
         });
 
     }
@@ -165,6 +175,10 @@ const Login = () => {
     
         <div className = 'w-1/2 bg-white p-10 rounded '>
             <h2 className = 'text-[34px] text-[#03014C] font-semibold font-sans '>forgot password</h2>
+            {
+                forgotPasswordError && 
+                <p className = 'text-[20px] w-1/2 rounded bg-red-500 font-semibold font-sans text-white p-2'>{forgotPasswordError}</p>
+            }
         <div  className = 'mt-[62px] relative w-[368px]'>
                     <input onChange = {handleEmail} value = {email} className = 'border-border border-2 rounded-lg py-[26px] pl-[52px] w-full' type="email" placeholder='write your email'/>
                     <p className = 'absolute top-[-8px] left-[34px] pl-[18px] pr-[15px] bg-white font-Nunito font-semibold text-[#11175D] text-[13px] tracking-[1px]'><span className = 'opacity-70 '>Email Address</span></p>

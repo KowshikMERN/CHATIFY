@@ -4,6 +4,7 @@ import {AiFillEye ,AiFillEyeInvisible} from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
+import { userLoginInfo } from '../../slices/userSlice';
 
 
 const Registration = () => {
@@ -13,7 +14,6 @@ const Registration = () => {
     const [fullName, setfullName] = useState ('')
     const[password,setPassword] = useState('')
     const [succese,setSuccese] = useState('')
-
     const [emailErr, setEmailErr] = useState('')
     const [fullNameErr, setFullNameErr] = useState('')
     const [passwordErr, setPasswordErr] = useState('')
@@ -45,7 +45,7 @@ const Registration = () => {
                 .then(() => {
                     sendEmailVerification(auth.currentUser)
                     .then(() => {
-                        toast.success('Registration done . please verify your email');
+                        toast.success('Registration done . please verify your email');  
                     setEmail('')
                     setfullName('')
                     setPassword('')
