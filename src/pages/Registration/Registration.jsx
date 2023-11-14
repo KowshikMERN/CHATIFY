@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import img from '../../assets/registration.png'
 import {AiFillEye ,AiFillEyeInvisible} from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import { userLoginInfo } from '../../slices/userSlice';
+import { useSelector } from 'react-redux';
+import { getDatabase, ref, set } from "firebase/database";
 
 
 const Registration = () => {
+    const db = getDatabase();
     const navigate = useNavigate()
     const auth = getAuth();
     const [email, setEmail] = useState ('')
@@ -42,33 +45,41 @@ const Registration = () => {
         }
         if(email && fullName && password && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) && /^(?=.*[a-z])/.test(password) && /(?=.*[0-9])/.test(password)){
             createUserWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    sendEmailVerification(auth.currentUser)
-                    .then(() => {
+                .then((user) => { 
+                    updateProfile(auth.currentUser, {
+                        displayName: fullName,
+                        photoURL: "./src/assets/profile.png"
+                      })
+                      .then(() => {
+                        sendEmailVerification(auth.currentUser)
+                        console.log(user,'user');
                         toast.success('Registration done . please verify your email');  
-                    setEmail('')
-                    setfullName('')
-                    setPassword('')
-                    setTimeout(()=>{
-                        navigate('/login')
-                    },3000)
-                    });
-                    
-                
-                
+                        setEmail('')
+                        setfullName('')
+                        setPassword('')
+                        setTimeout(()=>{
+                            navigate('/login')
+                        },3000)                             
+                    }).then(() => {
+                            set(ref(db, 'users/' + user.user?.uid), {
+                              username: user.user.displayName,
+                              email: user.user.email,
+                            })
+
+                    })
                 })
+                                        
                 .catch((error) => {
                     const errorCode = error.code;
                     console.log(errorCode);
                     if(errorCode.includes('auth/email-already-in-use')){
                         setEmailErr('email is already in use')
-
-                    }
-                    
+                    }                
                 });
-
         }
     }
+
+    
     const handleEmail = (e)=>{
         setEmail(e.target.value);
         setEmailErr('')

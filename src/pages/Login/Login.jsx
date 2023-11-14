@@ -55,11 +55,12 @@ const Login = () => {
             signInWithEmailAndPassword(auth, email, password)
             .then((user) => {
                 toast.success('login successfully done');
-                dispatch(userLoginInfo(user.user))
-                localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user.user)))
+                console.log(user);
+                dispatch(userLoginInfo(user))
+                localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user)))
                 setTimeout(()=>{
                     navigate('/home')
-                })
+                },3000)
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -67,7 +68,7 @@ const Login = () => {
                 if(errorCode.includes('auth/invalid-login-credentials')){
                     setError('please give your right email & password');
                 }
-            });
+            })
         } 
     }
     const googleSignIn = ()=>{
