@@ -134,7 +134,7 @@ const Login = () => {
 
                 <div className = 'mb-[60px] w-[372px]'>
                     <p className = 'text-loginEmail font-sans text-sm font-normal '>Email Addres</p>
-                    <input onChange = {handleEmail} className = 'py-[16px] pr-[175px] pl-[10px] border-b-2 border-loginBorder  outline-none' type="email" name="" id="" />
+                    <input onChange = {handleEmail} className = 'py-[16px]  pl-[10px] border-b-2 border-loginBorder  outline-none placeholder:text-[#03014C] font-sans text-xl placeholder:font-semibold w-full overflow-hidden' type="email" name="" id="" placeholder='Youraddres@email.com'/>
                     {
                         emailErr && <p className = 'text-white font-bold bg-red-500 font-Nunito text-sm rounded p-2 text-center mt-[2px] '>{emailErr}</p>
                     }
@@ -143,7 +143,7 @@ const Login = () => {
 
                 <div className = 'relative w-[372px]'>
                     <p className = 'text-loginEmail font-sans text-sm font-normal '>Password</p>
-                    <input onChange = {handlePassword} className = 'py-[16px] pr-[175px] pl-[10px] border-b-2 border-loginBorder outline-none' type={showPassword ? 'text' : 'password'} name="" id="" />
+                    <input onChange = {handlePassword} className = 'py-[16px]  pl-[10px] border-b-2 border-loginBorder outline-none placeholder:text-[#03014C] font-semibold text-xl font-sans w-full' type={showPassword ? 'text' : 'password'} name="" id="" placeholder='Enter your password'/>
                     {
                         showPassword ?
                         <AiFillEye onClick = {()=>setShowPassword(!showPassword)} className = 'absolute top-[33px] right-[23px] text-2xl'></AiFillEye>

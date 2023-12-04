@@ -14,11 +14,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home/Home.jsx';
 import store from './store'
 import { Provider } from 'react-redux'
+import Message from './pages/Message/Message.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home></Home>,
+  },
+  {
+    path: "/msg",
+    element: <Message></Message>,
   },
   {
     path: "/registration",

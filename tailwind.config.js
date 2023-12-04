@@ -18,7 +18,8 @@ export default {
         'loginEmail' : 'rgba(3, 1, 76, 0.5)',
         'shadow' : '0px 4px 4px 0px rgba(0, 0, 0, 0.25);',
         'wide' : 'rgba(77, 77, 77, 0.75)',
-        'overlay' : 'rgba(0, 0, 0, 0.41)'
+        'overlay' : 'rgba(0, 0, 0, 0.41)',
+        'secondary' : 'rgba(0, 0, 0, 0.85)'
 
       }
     },

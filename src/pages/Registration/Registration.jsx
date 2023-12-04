@@ -52,7 +52,6 @@ const Registration = () => {
                       })
                       .then(() => {
                         sendEmailVerification(auth.currentUser)
-                        console.log(user,'user');
                         toast.success('Registration done . please verify your email');  
                         setEmail('')
                         setfullName('')
@@ -71,7 +70,6 @@ const Registration = () => {
                                         
                 .catch((error) => {
                     const errorCode = error.code;
-                    console.log(errorCode);
                     if(errorCode.includes('auth/email-already-in-use')){
                         setEmailErr('email is already in use')
                     }                

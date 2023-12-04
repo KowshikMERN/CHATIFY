@@ -14,7 +14,6 @@ import UserList from '../../components/UserList/UserList';
 const Home = () => {
   const auth = getAuth();
   const data = useSelector(state=>state.userLoginInfo.userInfo)
-  console.log(data,'kowshik');
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [verify,setVerify] = useState(false)
@@ -40,7 +39,7 @@ const Home = () => {
           verify ?
           <div className = 'flex ml-[32px] mr-[23px]'>
             <div className = 'w-[186px]'>
-              <Sidebar/>
+              <Sidebar active = 'Home'/>
             </div>
             <div className = 'w-[427px] ml-[43px]'>
               <GroupList/>
