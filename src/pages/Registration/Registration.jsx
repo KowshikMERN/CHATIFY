@@ -139,13 +139,14 @@ const Registration = () => {
 
                     {
                         showPassword ?
-                        <AiFillEye onClick = {()=>setShowPassword(!showPassword)} className = 'absolute right-[23px] top-[33px]'/>
+                        <AiFillEye onClick = {()=>setShowPassword(!showPassword)} className = 'absolute right-[23px] top-[33px] text-2xl'/>
                         :
-                        <AiFillEyeInvisible onClick = {()=>setShowPassword(!showPassword)} className = 'absolute right-[23px] top-[33px]'/>
+                        <AiFillEyeInvisible onClick = {()=>setShowPassword(!showPassword)} className = 'absolute right-[23px] top-[33px] text-2xl'/>
                         
                     }
 
-                    {passwordErr && <p className = 'text-white font-bold bg-red-500 font-Nunito text-sm rounded p-2 text-center mt-[2px]'>{passwordErr}</p>}
+                    {passwordErr &&
+                    <p className = 'text-white font-bold bg-red-500 font-Nunito text-sm rounded p-2 text-center mt-[2px]'>{passwordErr}</p>}
                     
                 </div>
 
